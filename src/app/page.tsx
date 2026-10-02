@@ -2,6 +2,10 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { TopBar } from "@/components/TopBar";
 import { SiteFooter } from "@/components/SiteFooter";
+import { CtaButton } from "@/components/CtaButton";
+import { TextLink } from "@/components/TextLink";
+import type { TextLinkVariant } from "@/components/TextLink";
+import { GhostButton } from "@/components/GhostButton";
 
 const infoSections = [
   {
@@ -36,6 +40,7 @@ const infoSections = [
       href: "#control-more",
       label: "Learn more",
       style: "text-link" as const,
+      variant: "default" as const,
     },
   },
   {
@@ -71,22 +76,35 @@ const infoSections = [
     action: {
       href: "#watch",
       label: "See it in action",
-      style: "text-link-accent" as const,
+      style: "text-link" as const,
+      variant: "accent" as const,
     },
   },
 ];
 
-function actionClassName(
-  style: "text-link" | "text-link-accent" | "button",
-  tone: "light" | "dark",
-) {
-  if (style === "button") {
-    return "cta";
+function sectionAction(section: (typeof infoSections)[number]) {
+  if (section.action.style === "button") {
+    return (
+      <CtaButton
+        className="info-section-action"
+        href={section.action.href}
+      >
+        {section.action.label}
+      </CtaButton>
+    );
   }
-  if (style === "text-link-accent") {
-    return "text-link text-link-accent";
-  }
-  return tone === "dark" ? "text-link text-link-on-media" : "text-link";
+
+  const variant: TextLinkVariant = section.action.variant ?? "default";
+
+  return (
+    <TextLink
+      className="info-section-action"
+      href={section.action.href}
+      variant={variant}
+    >
+      {section.action.label}
+    </TextLink>
+  );
 }
 
 type SectionImage = {
@@ -261,9 +279,7 @@ export default function Home() {
                 hogging your hands or your desk.
               </p>
               <div className="hero-actions">
-                <a className="btn-ghost" href="#watch">
-                  Watch video
-                </a>
+                <GhostButton href="#watch">Watch video</GhostButton>
                 <a className="cta cta-accent" href="#control">
                   Discover Atom
                 </a>
@@ -293,17 +309,7 @@ export default function Home() {
             <div className="info-section-copy info-section-copy-narrow">
               <h2>{section.title}</h2>
               <p>{section.body}</p>
-              <a
-                className={`info-section-action ${actionClassName(section.action.style, section.tone)}`}
-                href={section.action.href}
-              >
-                {section.action.label}
-                {section.action.style !== "button" ? (
-                  <span className="text-link-arrow" aria-hidden="true">
-                    →
-                  </span>
-                ) : null}
-              </a>
+              {sectionAction(section)}
             </div>
           </SectionFrame>
         </section>

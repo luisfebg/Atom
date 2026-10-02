@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { BagIcon } from "@/components/BagIcon";
 import { ComponentCatalog } from "@/components/ComponentCatalog";
+import { CtaButton } from "@/components/CtaButton";
+import { GhostButton } from "@/components/GhostButton";
 
 const links = [
   { href: "#control", label: "Control" },
@@ -41,23 +43,35 @@ export function TopBar() {
 
       <div className="topbar-end">
         <div className={open ? "topbar-options open" : "topbar-options"}>
-          <ComponentCatalog />
-          <nav id="primary-nav" className="primary-nav" aria-label="Primary">
-            {links.map((link) => (
-              <a key={link.href} href={link.href} onClick={close}>
-                {link.label}
+          <div className="topbar-menu-bloom" aria-hidden="true">
+            <Image
+              className="topbar-menu-bloom-photo"
+              src="/images/section-1.jpg"
+              alt=""
+              fill
+              sizes="100vw"
+              unoptimized
+            />
+          </div>
+          <div className="topbar-menu-body">
+            <ComponentCatalog />
+            <nav id="primary-nav" className="primary-nav" aria-label="Primary">
+              {links.map((link) => (
+                <a key={link.href} href={link.href} onClick={close}>
+                  {link.label}
+                </a>
+              ))}
+              <a className="bag-button" href="#bag" aria-label="Bag" onClick={close}>
+                <BagIcon />
               </a>
-            ))}
-            <a className="bag-button" href="#bag" aria-label="Bag" onClick={close}>
-              <BagIcon />
-            </a>
-            <a className="cta" href="#control" onClick={close}>
-              Pre order
-            </a>
-          </nav>
+              <CtaButton href="#control" onClick={close}>
+                Pre order
+              </CtaButton>
+            </nav>
+          </div>
         </div>
 
-        <button
+        <GhostButton
           className="menu-toggle"
           type="button"
           aria-expanded={open}
@@ -65,7 +79,7 @@ export function TopBar() {
           onClick={() => setOpen((value) => !value)}
         >
           {open ? "Close" : "Menu"}
-        </button>
+        </GhostButton>
       </div>
     </header>
   );

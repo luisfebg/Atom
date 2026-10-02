@@ -2,11 +2,16 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { colorTokens } from "./catalog/colors";
-import { catalogEntries } from "./catalog/entries";
-import { mixinEntries } from "./catalog/mixins";
+import { typeTokens } from "./catalog/typography";
+import { CtaButton } from "./CtaButton";
+import { GhostButton } from "./GhostButton";
+import { TextLink } from "./TextLink";
+
+type CatalogTab = "components" | "animations" | "assets";
 
 export function ComponentCatalog() {
   const [open, setOpen] = useState(false);
+  const [tab, setTab] = useState<CatalogTab>("components");
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -35,10 +40,6 @@ export function ComponentCatalog() {
     };
   }, [open]);
 
-  const categories = Array.from(
-    new Set(catalogEntries.map((entry) => entry.category ?? "General")),
-  );
-
   return (
     <>
       <button
@@ -47,7 +48,10 @@ export function ComponentCatalog() {
         type="button"
         aria-haspopup="dialog"
         aria-expanded={open}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setTab("components");
+          setOpen(true);
+        }}
       >
         Components
       </button>
@@ -73,8 +77,7 @@ export function ComponentCatalog() {
                 <p className="catalog-modal-eyebrow">Library</p>
                 <h2 id={titleId}>Design system</h2>
                 <p className="catalog-modal-lead">
-                  Colour scheme, mixins, and components used across the site.
-                  Extend the registries as you build.
+                  Shared UI components, motion, and colour/type assets.
                 </p>
               </div>
               <button
@@ -87,85 +90,248 @@ export function ComponentCatalog() {
               </button>
             </header>
 
+            <div
+              className="catalog-tabs"
+              role="tablist"
+              aria-label="Design system sections"
+            >
+              <button
+                className={
+                  tab === "components"
+                    ? "catalog-tab catalog-tab-active"
+                    : "catalog-tab"
+                }
+                type="button"
+                role="tab"
+                aria-selected={tab === "components"}
+                id="catalog-tab-components"
+                aria-controls="catalog-panel-components"
+                onClick={() => setTab("components")}
+              >
+                Components
+              </button>
+              <button
+                className={
+                  tab === "animations"
+                    ? "catalog-tab catalog-tab-active"
+                    : "catalog-tab"
+                }
+                type="button"
+                role="tab"
+                aria-selected={tab === "animations"}
+                id="catalog-tab-animations"
+                aria-controls="catalog-panel-animations"
+                onClick={() => setTab("animations")}
+              >
+                Animations
+              </button>
+              <button
+                className={
+                  tab === "assets" ? "catalog-tab catalog-tab-active" : "catalog-tab"
+                }
+                type="button"
+                role="tab"
+                aria-selected={tab === "assets"}
+                id="catalog-tab-assets"
+                aria-controls="catalog-panel-assets"
+                onClick={() => setTab("assets")}
+              >
+                Assets
+              </button>
+            </div>
+
             <div className="catalog-modal-body">
-              <section className="catalog-group">
-                <h3>Colour scheme</h3>
-                <ul className="catalog-swatch-list">
-                  {colorTokens.map((token) => (
-                    <li key={token.id} className="catalog-swatch">
-                      <span
-                        className="catalog-swatch-chip"
-                        style={{ background: token.value }}
-                        aria-hidden="true"
-                      />
-                      <div className="catalog-item-meta">
-                        <p className="catalog-item-name">{token.name}</p>
-                        <p className="catalog-item-description">
-                          {token.value} · {token.cssVar}
-                        </p>
-                        <p className="catalog-item-description">{token.usage}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-
-              <section className="catalog-group">
-                <h3>Mixins</h3>
-                <ul className="catalog-list">
-                  {mixinEntries.map((entry) => {
-                    const Preview = entry.Preview;
-
-                    return (
-                      <li key={entry.id} className="catalog-item">
+              {tab === "components" ? (
+                <div
+                  role="tabpanel"
+                  id="catalog-panel-components"
+                  aria-labelledby="catalog-tab-components"
+                >
+                  <section className="catalog-group">
+                    <h3>Buttons</h3>
+                    <ul className="catalog-component-list">
+                      <li className="catalog-component">
                         <div className="catalog-item-meta">
-                          <p className="catalog-item-name">{entry.name}</p>
+                          <p className="catalog-item-name">CTA</p>
                           <p className="catalog-item-description">
-                            {entry.description}
+                            Primary dark-green pill action. Used for Pre order.
                           </p>
-                          <p className="catalog-item-code">.{entry.className}</p>
+                          <p className="catalog-item-description">
+                            CtaButton · .cta
+                          </p>
                         </div>
-                        <div className="catalog-item-preview">
-                          <Preview />
+                        <div className="catalog-component-preview">
+                          <CtaButton href="#control">Pre order</CtaButton>
                         </div>
                       </li>
-                    );
-                  })}
-                </ul>
-              </section>
-
-              {categories.map((category) => {
-                const entries = catalogEntries.filter(
-                  (entry) => (entry.category ?? "General") === category,
-                );
-
-                return (
-                  <section key={category} className="catalog-group">
-                    <h3>{category}</h3>
-                    <ul className="catalog-list">
-                      {entries.map((entry) => {
-                        const Preview = entry.Preview;
-
-                        return (
-                          <li key={entry.id} className="catalog-item">
-                            <div className="catalog-item-meta">
-                              <p className="catalog-item-name">{entry.name}</p>
-                              {entry.description ? (
-                                <p className="catalog-item-description">
-                                  {entry.description}
-                                </p>
-                              ) : null}
-                            </div>
-                            <div className="catalog-item-preview">
-                              <Preview />
-                            </div>
-                          </li>
-                        );
-                      })}
+                      <li className="catalog-component">
+                        <div className="catalog-item-meta">
+                          <p className="catalog-item-name">Ghost button</p>
+                          <p className="catalog-item-description">
+                            Transparent outlined pill. Used for Watch video and
+                            Menu.
+                          </p>
+                          <p className="catalog-item-description">
+                            GhostButton · .btn-ghost
+                          </p>
+                        </div>
+                        <div className="catalog-component-preview catalog-component-preview-on-dark">
+                          <GhostButton href="#watch">Watch video</GhostButton>
+                        </div>
+                      </li>
                     </ul>
                   </section>
-                );
-              })}
+
+                  <section className="catalog-group">
+                    <h3>Text links</h3>
+                    <ul className="catalog-component-list">
+                      <li className="catalog-component">
+                        <div className="catalog-item-meta">
+                          <p className="catalog-item-name">Text link</p>
+                          <p className="catalog-item-description">
+                            Inline action with arrow. Used for Learn more.
+                          </p>
+                          <p className="catalog-item-description">
+                            TextLink · .text-link
+                          </p>
+                        </div>
+                        <div className="catalog-component-preview">
+                          <TextLink href="#control-more">Learn more</TextLink>
+                        </div>
+                      </li>
+                      <li className="catalog-component">
+                        <div className="catalog-item-meta">
+                          <p className="catalog-item-name">Text link accent</p>
+                          <p className="catalog-item-description">
+                            Accent-coloured inline action. Used for See it in
+                            action.
+                          </p>
+                          <p className="catalog-item-description">
+                            TextLink variant=&quot;accent&quot; ·
+                            .text-link-accent
+                          </p>
+                        </div>
+                        <div className="catalog-component-preview catalog-component-preview-on-dark">
+                          <TextLink href="#watch" variant="accent">
+                            See it in action
+                          </TextLink>
+                        </div>
+                      </li>
+                    </ul>
+                  </section>
+                </div>
+              ) : null}
+
+              {tab === "animations" ? (
+                <div
+                  role="tabpanel"
+                  id="catalog-panel-animations"
+                  aria-labelledby="catalog-tab-animations"
+                >
+                  <section className="catalog-group">
+                    <h3>CTA press</h3>
+                    <ul className="catalog-component-list">
+                      <li className="catalog-component">
+                        <div className="catalog-item-meta">
+                          <p className="catalog-item-name">Click press + flash</p>
+                          <p className="catalog-item-description">
+                            On click, CTA briefly lightens, presses down, then
+                            springs back. Animation: cta-press · .cta-click
+                          </p>
+                          <p className="catalog-item-description">
+                            Built into CtaButton. Click to preview.
+                          </p>
+                        </div>
+                        <div className="catalog-component-preview">
+                          <CtaButton type="button">Pre order</CtaButton>
+                        </div>
+                      </li>
+                    </ul>
+                  </section>
+
+                  <section className="catalog-group">
+                    <h3>Ghost press</h3>
+                    <ul className="catalog-component-list">
+                      <li className="catalog-component">
+                        <div className="catalog-item-meta">
+                          <p className="catalog-item-name">Click press + flash</p>
+                          <p className="catalog-item-description">
+                            On click, ghost button briefly fills lighter, presses
+                            down, then recovers. Animation: btn-ghost-press ·
+                            .btn-ghost-click
+                          </p>
+                          <p className="catalog-item-description">
+                            Built into GhostButton. Click to preview.
+                          </p>
+                        </div>
+                        <div className="catalog-component-preview catalog-component-preview-on-dark">
+                          <GhostButton type="button">Watch video</GhostButton>
+                        </div>
+                      </li>
+                    </ul>
+                  </section>
+                </div>
+              ) : null}
+
+              {tab === "assets" ? (
+                <div
+                  role="tabpanel"
+                  id="catalog-panel-assets"
+                  aria-labelledby="catalog-tab-assets"
+                >
+                  <section className="catalog-group">
+                    <h3>Colour scheme</h3>
+                    <ul className="catalog-swatch-list">
+                      {colorTokens.map((token) => (
+                        <li key={token.id} className="catalog-swatch">
+                          <span
+                            className="catalog-swatch-chip"
+                            style={{ background: token.value }}
+                            aria-hidden="true"
+                          />
+                          <div className="catalog-item-meta">
+                            <p className="catalog-item-name">{token.name}</p>
+                            <p className="catalog-item-description">
+                              {token.value} · {token.cssVar}
+                            </p>
+                            <p className="catalog-item-description">
+                              {token.usage}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+
+                  <section className="catalog-group">
+                    <h3>Typography</h3>
+                    <ul className="catalog-type-list">
+                      {typeTokens.map((token) => (
+                        <li key={token.id} className="catalog-type">
+                          <p
+                            className={
+                              token.role === "display"
+                                ? "catalog-type-sample catalog-type-sample-display"
+                                : "catalog-type-sample catalog-type-sample-body"
+                            }
+                          >
+                            {token.sample}
+                          </p>
+                          <div className="catalog-item-meta">
+                            <p className="catalog-item-name">{token.name}</p>
+                            <p className="catalog-item-description">
+                              {token.family} · {token.cssVar}
+                            </p>
+                            <p className="catalog-item-description">
+                              {token.usage}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
