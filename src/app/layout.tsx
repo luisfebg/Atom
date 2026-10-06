@@ -1,16 +1,50 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import {
+  Exo_2,
+  Inter,
+  Manrope,
+  Michroma,
+  Plus_Jakarta_Sans,
+  Unica_One,
+} from "next/font/google";
+import { FontSwitcher } from "@/components/FontSwitcher";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-option-inter",
   display: "swap",
 });
 
 const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-option-manrope",
+  display: "swap",
+});
+
+const unicaOne = Unica_One({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-option-unica-one",
+  display: "swap",
+});
+
+const michroma = Michroma({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-option-michroma",
+  display: "swap",
+});
+
+const exo2 = Exo_2({
+  subsets: ["latin"],
+  variable: "--font-option-exo-2",
+  display: "swap",
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-option-plus-jakarta",
   display: "swap",
 });
 
@@ -23,14 +57,26 @@ export const metadata: Metadata = {
   },
 };
 
+const fontVariables = [
+  inter.variable,
+  manrope.variable,
+  unicaOne.variable,
+  michroma.variable,
+  exo2.variable,
+  plusJakarta.variable,
+].join(" ");
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={fontVariables} data-site-font="default">
+      <body>
+        {children}
+        <FontSwitcher />
+      </body>
     </html>
   );
 }

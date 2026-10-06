@@ -9,9 +9,13 @@ import { GhostButton } from "@/components/GhostButton";
 
 const infoSections = [
   {
-    id: "control",
+    id: "product",
     title: "Take control anywhere",
-    body: "Clip Atom to a phone, tablet, or laptop and keep your thumbs in the game — couch, commute, or café table.",
+    overtitle: {
+      line1: "Pocket sized...",
+      line2: "full of possibilities",
+    },
+    body: "Console-level control in a form that fits your pocket. ATOM is made for gamers who never want to be without their favourite games.",
     tone: "light" as const,
     layout: "triptych" as const,
     image: {
@@ -37,16 +41,20 @@ const infoSections = [
       },
     ],
     action: {
-      href: "#control-more",
+      href: "#product-more",
       label: "Learn more",
       style: "text-link" as const,
       variant: "default" as const,
     },
   },
   {
-    id: "colours",
-    title: "A colour for every playground",
-    body: "From quiet forest tones to loud accent pops, pick a finish that matches how you play and where you take it.",
+    id: "features",
+    title: "In a range of stunning finishes.",
+    overtitle: {
+      line1: "A colour for every",
+      line2: "playground",
+    },
+    body: "",
     tone: "light" as const,
     layout: "split" as const,
     image: {
@@ -56,15 +64,19 @@ const infoSections = [
       height: 443,
     },
     action: {
-      href: "#colours-gallery",
+      href: "#features-gallery",
       label: "Explore all colours",
       style: "button" as const,
     },
   },
   {
-    id: "carry",
+    id: "about",
     title: "Play more, carry less",
-    body: "No extra case bulk. Atom stays tiny in your pocket and ready the moment your screen needs a pad.",
+    overtitle: {
+      line1: "Built for",
+      line2: "what moves you",
+    },
+    body: "ATOM is designed to go wherever life takes you. Slip it in your pocket and you're always ready for the next game, the next journey, the next moment.",
     tone: "dark" as const,
     layout: "overlay" as const,
     image: {
@@ -74,15 +86,36 @@ const infoSections = [
       height: 278,
     },
     action: {
-      href: "#watch",
+      href: "#about-more",
       label: "See it in action",
       style: "text-link" as const,
       variant: "accent" as const,
     },
   },
+  {
+    id: "support",
+    title: {
+      line1: "Secretly planning",
+      line2: "world domination",
+    },
+    body: "A small controller for a much bigger world. Thanks for being a part of it.",
+    tone: "dark" as const,
+    layout: "overlay" as const,
+    copyLayout: "closing" as const,
+    image: {
+      src: "/images/section-5.jpg",
+      alt: "Traveler with a backpack overlooking misty mountain ranges",
+      width: 1024,
+      height: 275,
+    },
+  },
 ];
 
 function sectionAction(section: (typeof infoSections)[number]) {
+  if (!("action" in section) || !section.action) {
+    return null;
+  }
+
   if (section.action.style === "button") {
     return (
       <CtaButton
@@ -90,6 +123,9 @@ function sectionAction(section: (typeof infoSections)[number]) {
         href={section.action.href}
       >
         {section.action.label}
+        <span className="cta-arrow" aria-hidden="true">
+          →
+        </span>
       </CtaButton>
     );
   }
@@ -261,30 +297,56 @@ export default function Home() {
           <TopBar />
           <div className="hero-content">
             <div className="hero-copy">
-              <div className="hero-copy-bloom" aria-hidden="true">
-                <Image
-                  className="hero-copy-bloom-photo"
-                  src="/images/section-1.jpg"
-                  alt=""
-                  fill
-                  priority
-                  quality={100}
-                  sizes="100vw"
-                  unoptimized
-                />
-              </div>
-              <h1 className="hero-title">Tiny pad. Sticks on.</h1>
+              <p className="hero-overtitle">Small plays Big</p>
+              <h1 className="hero-title">A smaller way to play a bigger world</h1>
               <p>
                 A pocket-size gamepad that clips to your screen. Play without
                 hogging your hands or your desk.
               </p>
               <div className="hero-actions">
-                <GhostButton href="#watch">Watch video</GhostButton>
-                <a className="cta cta-accent" href="#control">
+                <a className="cta cta-accent" href="#product">
                   Discover Atom
+                  <span className="cta-arrow" aria-hidden="true">
+                    →
+                  </span>
                 </a>
+                <GhostButton href="#watch">
+                  <span className="btn-ghost-play" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M10 8.5v7l6-3.5-6-3.5z" />
+                    </svg>
+                  </span>
+                  Watch video
+                </GhostButton>
               </div>
             </div>
+            <ul className="hero-highlights">
+              <li>
+                <span>Ultra</span>
+                <span>portable</span>
+              </li>
+              <li>
+                <span>Play</span>
+                <span>anywhere</span>
+              </li>
+              <li>
+                <span>Multidevice</span>
+                <span>compatible</span>
+              </li>
+              <li>
+                <span>All day</span>
+                <span>battery</span>
+              </li>
+            </ul>
           </div>
         </SectionFrame>
       </section>
@@ -306,25 +368,42 @@ export default function Home() {
             tone={section.tone}
             overlayClassName="section-overlay section-overlay-center"
           >
-            <div className="info-section-copy info-section-copy-narrow">
-              <h2>{section.title}</h2>
-              <p>{section.body}</p>
+            <div
+              className={
+                "copyLayout" in section && section.copyLayout === "closing"
+                  ? "info-section-copy info-section-closing"
+                  : "info-section-copy info-section-copy-narrow"
+              }
+            >
+              {"overtitle" in section && section.overtitle ? (
+                <p className="section-overtitle">
+                  <span>{section.overtitle.line1}</span>
+                  <span>{section.overtitle.line2}</span>
+                </p>
+              ) : null}
+              <h2>
+                {typeof section.title === "string" ? (
+                  section.title
+                ) : (
+                  <>
+                    <span className="section-title-line">
+                      {section.title.line1}
+                    </span>
+                    <span className="section-title-line">
+                      {section.title.line2}
+                    </span>
+                  </>
+                )}
+                {"copyLayout" in section && section.copyLayout === "closing" ? (
+                  <span className="section-subline" aria-hidden="true" />
+                ) : null}
+              </h2>
+              {section.body ? <p>{section.body}</p> : null}
               {sectionAction(section)}
             </div>
           </SectionFrame>
         </section>
       ))}
-
-      <section className="media-section" aria-label="Atom on the trail">
-        <SectionFrame
-          image={{
-            src: "/images/section-5.jpg",
-            alt: "Traveler with a backpack overlooking misty mountain ranges",
-            width: 1024,
-            height: 275,
-          }}
-        />
-      </section>
 
       <SiteFooter />
     </main>

@@ -161,7 +161,7 @@ export function ComponentCatalog() {
                           </p>
                         </div>
                         <div className="catalog-component-preview">
-                          <CtaButton href="#control">Pre order</CtaButton>
+                          <CtaButton href="#product">Pre order</CtaButton>
                         </div>
                       </li>
                       <li className="catalog-component">
@@ -196,7 +196,7 @@ export function ComponentCatalog() {
                           </p>
                         </div>
                         <div className="catalog-component-preview">
-                          <TextLink href="#control-more">Learn more</TextLink>
+                          <TextLink href="#product-more">Learn more</TextLink>
                         </div>
                       </li>
                       <li className="catalog-component">
@@ -212,7 +212,7 @@ export function ComponentCatalog() {
                           </p>
                         </div>
                         <div className="catalog-component-preview catalog-component-preview-on-dark">
-                          <TextLink href="#watch" variant="accent">
+                          <TextLink href="#about-more" variant="accent">
                             See it in action
                           </TextLink>
                         </div>

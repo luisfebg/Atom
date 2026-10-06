@@ -8,9 +8,10 @@ import { CtaButton } from "@/components/CtaButton";
 import { GhostButton } from "@/components/GhostButton";
 
 const links = [
-  { href: "#control", label: "Control" },
-  { href: "#colours", label: "Colours" },
-  { href: "#carry", label: "Carry" },
+  { href: "#product", label: "Product" },
+  { href: "#features", label: "Features" },
+  { href: "#about", label: "About" },
+  { href: "#support", label: "Support" },
 ];
 
 export function TopBar() {
@@ -64,7 +65,7 @@ export function TopBar() {
               <a className="bag-button" href="#bag" aria-label="Bag" onClick={close}>
                 <BagIcon />
               </a>
-              <CtaButton href="#control" onClick={close}>
+              <CtaButton href="#product" onClick={close}>
                 Pre order
               </CtaButton>
             </nav>
