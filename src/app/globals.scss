@@ -826,7 +826,7 @@ main {
     max-width: 100%;
     min-height: 2.5rem;
     margin: 0;
-    padding: 0 space(2) 0 space(8);
+    padding: 0 space(5) 0 space(8);
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
@@ -1370,21 +1370,30 @@ main {
   margin-top: 1rem;
 }
 
-.hero-signature {
+.hero-mid-row {
   position: absolute;
   top: 48%;
   right: clamp(1.75rem, 5vw, 3.5rem);
   z-index: 2;
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%);
+}
+
+.hero-signature {
   display: block;
   width: min(16rem, 26vw);
   height: auto;
   margin: 0;
   object-fit: contain;
   object-position: right center;
-  transform: translateY(-50%);
   // White PNG → primary green (#0b3b32)
   filter: brightness(0) saturate(100%) invert(14%) sepia(42%) saturate(1048%)
     hue-rotate(131deg) brightness(92%) contrast(96%);
+}
+
+.hero-angled-view {
+  display: none;
 }
 
 .hero-tagline {
@@ -1419,16 +1428,40 @@ main {
 }
 
 @media (max-width: 720px) {
-  .hero-signature {
+  .hero-mid-row {
     position: static;
     top: auto;
     right: auto;
-    align-self: flex-start;
-    width: min(10.5rem, 78%);
-    margin: auto 0 auto space(3);
-    object-position: left center;
+    align-self: stretch;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.35rem;
+    width: 100%;
+    max-width: 100%;
+    margin: auto 0;
+    padding: 0 space(2) 0 0;
+    box-sizing: border-box;
     transform: none;
+  }
+
+  .hero-signature {
+    width: min(14.25rem, 52%);
+    margin: 0;
+    object-position: left center;
     filter: none;
+    transform: translate(-0.35rem, -3rem);
+  }
+
+  .hero-angled-view {
+    display: block;
+    flex: 0 0 auto;
+    width: min(14.5rem, 52%);
+    height: auto;
+    margin: 0 0 0 auto;
+    object-fit: contain;
+    object-position: right center;
+    transform: translate(0.65rem, -3.35rem) scale(1.35);
+    transform-origin: right center;
   }
 
   .hero-tagline {
@@ -1501,23 +1534,40 @@ main {
     position: absolute;
     z-index: 1;
     pointer-events: none;
-    background: rgb(255 255 255 / 45%);
   }
 
   .hero-highlights::before {
     top: 0;
     bottom: 0;
     left: 50%;
-    width: 1px;
+    width: 2px;
     transform: translateX(-50%);
+    background: linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 45%) 0%,
+      rgb(255 255 255 / 45%) calc(50% - 0.45rem),
+      transparent calc(50% - 0.45rem),
+      transparent calc(50% + 0.45rem),
+      rgb(255 255 255 / 45%) calc(50% + 0.45rem),
+      rgb(255 255 255 / 45%) 100%
+    );
   }
 
   .hero-highlights::after {
     left: 0;
     right: 0;
     top: 50%;
-    height: 1px;
+    height: 2px;
     transform: translateY(-50%);
+    background: linear-gradient(
+      to right,
+      rgb(255 255 255 / 45%) 0%,
+      rgb(255 255 255 / 45%) calc(50% - 0.45rem),
+      transparent calc(50% - 0.45rem),
+      transparent calc(50% + 0.45rem),
+      rgb(255 255 255 / 45%) calc(50% + 0.45rem),
+      rgb(255 255 255 / 45%) 100%
+    );
   }
 
   .hero-highlights li {
@@ -2273,6 +2323,34 @@ p {
   }
 }
 
+.font-switcher-toggle {
+  position: fixed;
+  z-index: 40;
+  left: 1.15rem;
+  bottom: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-text-on-dark) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-dark) 88%, #000);
+  color: var(--color-text-on-dark);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 28%);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.font-switcher-toggle:hover,
+.font-switcher-toggle:focus-visible {
+  background: color-mix(in srgb, var(--color-dark) 70%, #000);
+}
+
 .font-switcher {
   position: fixed;
   z-index: 40;
@@ -2290,6 +2368,26 @@ p {
   color: var(--color-text-on-dark);
   box-shadow: 0 10px 30px rgb(0 0 0 / 28%);
   transform: translateX(-50%);
+}
+
+.font-switcher-desktop-close {
+  flex: 0 0 auto;
+  appearance: none;
+  margin: 0;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--color-text-on-dark) 22%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-on-dark);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.font-switcher-desktop-close:hover,
+.font-switcher-desktop-close:focus-visible {
+  background: color-mix(in srgb, var(--color-text-on-dark) 10%, transparent);
 }
 
 .font-switcher-label {
@@ -2355,6 +2453,7 @@ p {
 }
 
 @media (max-width: 720px) {
+  .font-switcher-toggle,
   .font-switcher-desktop {
     display: none;
   }

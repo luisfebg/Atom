@@ -24,9 +24,11 @@ const STORAGE_KEY = "atom-site-font";
 export function FontSwitcher() {
   const [fontId, setFontId] = useState<SiteFontId>("default");
   const [open, setOpen] = useState(false);
+  const [desktopOpen, setDesktopOpen] = useState(false);
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const desktopToggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY) as SiteFontId | null;
@@ -72,28 +74,56 @@ export function FontSwitcher() {
 
   return (
     <>
-      <div className="font-switcher font-switcher-desktop" role="region" aria-label="Font switcher">
-        <p className="font-switcher-label">Fonts</p>
-        <div className="font-switcher-options" role="list">
-          {siteFontOptions.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              role="listitem"
-              className={
-                fontId === option.id
-                  ? "font-switcher-option font-switcher-option-active"
-                  : "font-switcher-option"
-              }
-              style={{ fontFamily: option.sampleFamily }}
-              aria-pressed={fontId === option.id}
-              onClick={() => selectFont(option.id)}
-            >
-              {option.label}
-            </button>
-          ))}
+      <button
+        ref={desktopToggleRef}
+        className="font-switcher-toggle"
+        type="button"
+        aria-expanded={desktopOpen}
+        aria-controls="font-switcher-desktop-panel"
+        onClick={() => setDesktopOpen((value) => !value)}
+      >
+        {desktopOpen ? "Hide fonts" : "Fonts"}
+      </button>
+
+      {desktopOpen ? (
+        <div
+          id="font-switcher-desktop-panel"
+          className="font-switcher font-switcher-desktop"
+          role="region"
+          aria-label="Font switcher"
+        >
+          <p className="font-switcher-label">Fonts</p>
+          <div className="font-switcher-options" role="list">
+            {siteFontOptions.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                role="listitem"
+                className={
+                  fontId === option.id
+                    ? "font-switcher-option font-switcher-option-active"
+                    : "font-switcher-option"
+                }
+                style={{ fontFamily: option.sampleFamily }}
+                aria-pressed={fontId === option.id}
+                onClick={() => selectFont(option.id)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <button
+            className="font-switcher-desktop-close"
+            type="button"
+            onClick={() => {
+              setDesktopOpen(false);
+              desktopToggleRef.current?.focus();
+            }}
+          >
+            Close
+          </button>
         </div>
-      </div>
+      ) : null}
 
       <button
         ref={triggerRef}

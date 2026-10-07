@@ -402,14 +402,24 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <Image
-            className="hero-signature"
-            src="/images/signature-gff.png"
-            alt=""
-            width={217}
-            height={72}
-            unoptimized
-          />
+          <div className="hero-mid-row">
+            <Image
+              className="hero-signature"
+              src="/images/signature-gff.png"
+              alt=""
+              width={217}
+              height={72}
+              unoptimized
+            />
+            <Image
+              className="hero-angled-view"
+              src="/images/angled-view.png"
+              alt="Atom gamepad at an angled view"
+              width={280}
+              height={280}
+              unoptimized
+            />
+          </div>
           <p className="hero-tagline">
             <span className="hero-tagline-line" aria-hidden="true" />
             <span className="hero-tagline-copy">
