@@ -47,7 +47,7 @@ const infoSections = [
       },
       {
         text: "USB-C charging. Always ready.",
-        y: "54%",
+        y: "60%",
       },
     ],
     action: {

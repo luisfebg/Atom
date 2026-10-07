@@ -521,24 +521,7 @@ main {
   align-self: center;
   min-width: 0;
   height: 2px;
-  background: transparent;
-}
-
-.section-side-caption-line::before,
-.section-side-caption-line::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
-.section-side-caption-line::before {
   background: var(--color-accent);
-  mix-blend-mode: darken;
-}
-
-.section-side-caption-line::after {
-  background: #fff;
-  mix-blend-mode: lighten;
 }
 
 .section-side-caption-dot {
@@ -547,7 +530,7 @@ main {
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 50%;
-  background: transparent;
+  background: var(--color-accent);
   transform: translateY(-50%);
 }
 
@@ -559,24 +542,6 @@ main {
 .section-side-caption-dot:last-child {
   right: 0;
   transform: translate(50%, -50%);
-}
-
-.section-side-caption-dot::before,
-.section-side-caption-dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-}
-
-.section-side-caption-dot::before {
-  background: var(--color-accent);
-  mix-blend-mode: darken;
-}
-
-.section-side-caption-dot::after {
-  background: #fff;
-  mix-blend-mode: lighten;
 }
 
 .section-side-caption-text {
@@ -1486,9 +1451,10 @@ main {
 
 .hero-highlights li {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 0.55rem;
+  text-align: center;
+  gap: 0.4rem;
   font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -1498,15 +1464,16 @@ main {
 .hero-highlight-icon {
   flex-shrink: 0;
   display: block;
-  width: 2.35rem;
-  height: 2.35rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-inline: auto;
   object-fit: contain;
 }
 
 .hero-highlight-copy {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   gap: 0.15rem;
 }
 
@@ -1555,11 +1522,8 @@ main {
 
   .hero-highlights li {
     box-sizing: border-box;
-    flex-direction: column;
     width: 100%;
-    align-items: center;
     justify-content: center;
-    text-align: center;
     gap: 0.05rem;
     padding: 0.15rem 0.45rem;
     font-size: 0.62rem;
