@@ -33,11 +33,21 @@ const infoSections = [
         objectPosition: "center",
       },
       {
-        src: "/images/section-2-side.jpg",
+        src: "/images/controller-side-view.png",
         alt: "Side profile of Atom showing power button and USB-C port",
-        width: 510,
-        height: 340,
+        width: 1254,
+        height: 1254,
         objectPosition: "center",
+      },
+    ],
+    sideCaptions: [
+      {
+        text: "Power on, play instantly.",
+        y: "41%",
+      },
+      {
+        text: "USB-C charging. Always ready.",
+        y: "54%",
       },
     ],
     action: {
@@ -49,12 +59,12 @@ const infoSections = [
   },
   {
     id: "features",
-    title: "In a range of stunning finishes.",
+    title: "",
     overtitle: {
       line1: "A colour for every",
       line2: "playground",
     },
-    body: "",
+    body: "The same compact design, in a range of stunning finishes.",
     tone: "light" as const,
     layout: "split" as const,
     image: {
@@ -188,7 +198,9 @@ function SectionPhotoTile({
 
 function SectionFrame({
   image,
+  mobileImage,
   images,
+  sideCaptions,
   priority = false,
   layout = "overlay",
   tone = "light",
@@ -196,7 +208,9 @@ function SectionFrame({
   children,
 }: {
   image: SectionImage;
+  mobileImage?: SectionImage;
   images?: SectionImage[];
+  sideCaptions?: { text: string; y: string }[];
   priority?: boolean;
   layout?: "overlay" | "split" | "triptych";
   tone?: "light" | "dark";
@@ -222,11 +236,35 @@ function SectionFrame({
         </div>
         <div className="section-copy-pane">{children}</div>
         <div className="section-photo-pane section-photo-pane-side">
-          <SectionPhotoTile
-            photo={rightPhoto}
-            priority={priority}
-            sizes="(max-width: 720px) 100vw, 35vw"
-          />
+          <div className="section-side-media">
+            <SectionPhotoTile
+              photo={rightPhoto}
+              priority={priority}
+              sizes="(max-width: 720px) 55vw, 28vw"
+            />
+            {sideCaptions && sideCaptions.length > 0 ? (
+              <ul className="section-side-captions">
+                {sideCaptions.map((caption) => (
+                  <li
+                    key={caption.text}
+                    className="section-side-caption"
+                    style={{ ["--callout-y" as string]: caption.y }}
+                  >
+                    <span
+                      className="section-side-caption-line"
+                      aria-hidden="true"
+                    >
+                      <span className="section-side-caption-dot" />
+                      <span className="section-side-caption-dot" />
+                    </span>
+                    <span className="section-side-caption-text">
+                      {caption.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
         </div>
       </div>
     );
@@ -262,10 +300,19 @@ function SectionFrame({
       className="section-frame section-frame-overlay"
       style={{
         ["--section-aspect" as string]: `${image.width} / ${image.height}`,
+        ...(mobileImage
+          ? {
+              ["--section-aspect-mobile" as string]: `${mobileImage.width} / ${mobileImage.height}`,
+            }
+          : {}),
       }}
     >
       <Image
-        className="section-photo"
+        className={
+          mobileImage
+            ? "section-photo section-photo-desktop"
+            : "section-photo"
+        }
         src={image.src}
         alt={image.alt}
         fill
@@ -274,6 +321,18 @@ function SectionFrame({
         sizes="100vw"
         unoptimized
       />
+      {mobileImage ? (
+        <Image
+          className="section-photo section-photo-mobile"
+          src={mobileImage.src}
+          alt={mobileImage.alt}
+          fill
+          priority={priority}
+          quality={100}
+          sizes="100vw"
+          unoptimized
+        />
+      ) : null}
       {children ? (
         <div className={overlayClassName}>{children}</div>
       ) : null}
@@ -293,15 +352,28 @@ export default function Home() {
             width: 1024,
             height: 395,
           }}
+          mobileImage={{
+            src: "/images/mobile-hero-bg.png",
+            alt: "Atom gamepad in forest green on a sunlit surface",
+            width: 941,
+            height: 1672,
+          }}
         >
           <TopBar />
           <div className="hero-content">
             <div className="hero-copy">
               <p className="hero-overtitle">Small plays Big</p>
-              <h1 className="hero-title">A smaller way to play a bigger world</h1>
-              <p>
+              <h1 className="hero-title">
+                <span className="hero-title-line">A smaller way</span>
+                <span className="hero-title-line">to play a bigger world.</span>
+              </h1>
+              <p className="hero-desc hero-desc-desktop">
                 A pocket-size gamepad that clips to your screen. Play without
                 hogging your hands or your desk.
+              </p>
+              <p className="hero-desc hero-desc-mobile">
+                A premium, pocket-sized controller for all your games.
+                Anywhere.
               </p>
               <div className="hero-actions">
                 <a className="cta cta-accent" href="#product">
@@ -329,25 +401,80 @@ export default function Home() {
                 </GhostButton>
               </div>
             </div>
-            <ul className="hero-highlights">
-              <li>
+          </div>
+          <Image
+            className="hero-signature"
+            src="/images/signature-gff.png"
+            alt=""
+            width={217}
+            height={72}
+            unoptimized
+          />
+          <p className="hero-tagline">
+            <span className="hero-tagline-line" aria-hidden="true" />
+            <span className="hero-tagline-copy">
+              <span>Designed for</span>
+              <span>real life.</span>
+            </span>
+          </p>
+          <ul className="hero-highlights">
+            <li>
+              <Image
+                className="hero-highlight-icon"
+                src="/images/leaf.png"
+                alt=""
+                width={64}
+                height={64}
+                unoptimized
+              />
+              <span className="hero-highlight-copy">
                 <span>Ultra</span>
                 <span>portable</span>
-              </li>
-              <li>
+              </span>
+            </li>
+            <li>
+              <Image
+                className="hero-highlight-icon"
+                src="/images/controller.png"
+                alt=""
+                width={64}
+                height={64}
+                unoptimized
+              />
+              <span className="hero-highlight-copy">
                 <span>Play</span>
                 <span>anywhere</span>
-              </li>
-              <li>
+              </span>
+            </li>
+            <li>
+              <Image
+                className="hero-highlight-icon"
+                src="/images/connectivity.png"
+                alt=""
+                width={64}
+                height={64}
+                unoptimized
+              />
+              <span className="hero-highlight-copy">
                 <span>Multidevice</span>
                 <span>compatible</span>
-              </li>
-              <li>
+              </span>
+            </li>
+            <li>
+              <Image
+                className="hero-highlight-icon"
+                src="/images/battery.png"
+                alt=""
+                width={64}
+                height={64}
+                unoptimized
+              />
+              <span className="hero-highlight-copy">
                 <span>All day</span>
                 <span>battery</span>
-              </li>
-            </ul>
-          </div>
+              </span>
+            </li>
+          </ul>
         </SectionFrame>
       </section>
 
@@ -364,6 +491,9 @@ export default function Home() {
           <SectionFrame
             image={section.image}
             images={"images" in section ? section.images : undefined}
+            sideCaptions={
+              "sideCaptions" in section ? section.sideCaptions : undefined
+            }
             layout={section.layout}
             tone={section.tone}
             overlayClassName="section-overlay section-overlay-center"
@@ -381,26 +511,49 @@ export default function Home() {
                   <span>{section.overtitle.line2}</span>
                 </p>
               ) : null}
-              <h2>
-                {typeof section.title === "string" ? (
-                  section.title
-                ) : (
-                  <>
-                    <span className="section-title-line">
-                      {section.title.line1}
-                    </span>
-                    <span className="section-title-line">
-                      {section.title.line2}
-                    </span>
-                  </>
-                )}
-                {"copyLayout" in section && section.copyLayout === "closing" ? (
-                  <span className="section-subline" aria-hidden="true" />
-                ) : null}
-              </h2>
+              {section.title ? (
+                <h2>
+                  {typeof section.title === "string" ? (
+                    section.title
+                  ) : (
+                    <>
+                      <span className="section-title-line">
+                        {section.title.line1}
+                      </span>
+                      <span className="section-title-line">
+                        {section.title.line2}
+                      </span>
+                    </>
+                  )}
+                  {"copyLayout" in section &&
+                  section.copyLayout === "closing" ? (
+                    <span className="section-subline" aria-hidden="true" />
+                  ) : null}
+                </h2>
+              ) : null}
               {section.body ? <p>{section.body}</p> : null}
               {sectionAction(section)}
             </div>
+            {section.id === "about" ? (
+              <div className="about-rail" aria-hidden="true">
+                <span className="about-rail-stop">
+                  <span className="about-rail-dot" />
+                  <span className="about-rail-label">AT HOME</span>
+                </span>
+                <span className="about-rail-stop">
+                  <span className="about-rail-dot" />
+                  <span className="about-rail-label">ON THE GO</span>
+                </span>
+                <span className="about-rail-stop">
+                  <span className="about-rail-dot" />
+                  <span className="about-rail-label">AT WORK</span>
+                </span>
+                <span className="about-rail-stop">
+                  <span className="about-rail-dot" />
+                  <span className="about-rail-label">ANYWHERE</span>
+                </span>
+              </div>
+            ) : null}
           </SectionFrame>
         </section>
       ))}

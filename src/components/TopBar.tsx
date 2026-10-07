@@ -73,13 +73,18 @@ export function TopBar() {
         </div>
 
         <GhostButton
-          className="menu-toggle"
+          className={open ? "menu-toggle menu-toggle-open" : "menu-toggle"}
           type="button"
           aria-expanded={open}
           aria-controls="primary-nav"
+          aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((value) => !value)}
         >
-          {open ? "Close" : "Menu"}
+          <span className="menu-toggle-icon" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
         </GhostButton>
       </div>
     </header>

@@ -8,7 +8,7 @@ import {
   Unica_One,
 } from "next/font/google";
 import { FontSwitcher } from "@/components/FontSwitcher";
-import "./globals.css";
+import "./globals.scss";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -73,6 +73,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={fontVariables} data-site-font="default">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bpmf+Huninn&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
         {children}
         <FontSwitcher />
