@@ -689,6 +689,29 @@ main {
   text-shadow: none;
 }
 
+#features .section-frame-overlay {
+  aspect-ratio: auto;
+  width: 100%;
+  height: clamp(13.5rem, 22vw, 18.5rem);
+  min-height: 0;
+}
+
+#features .section-photo {
+  object-fit: cover;
+  object-position: center center;
+  transform: scale(1.18, 1.32) translateX(-7%);
+  transform-origin: center center;
+}
+
+#features .section-overlay {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#features .info-section-copy-narrow {
+  max-width: 14rem;
+}
+
 #support .section-frame-overlay {
   aspect-ratio: 5.2 / 1;
   min-height: 0;
@@ -1076,6 +1099,24 @@ main {
     margin: 0.35rem 0 1.1rem 1rem;
   }
 
+  #features .section-frame-overlay {
+    aspect-ratio: auto;
+    height: clamp(11.5rem, 42vw, 15rem);
+    min-height: 0;
+  }
+
+  #features .info-section-copy {
+    box-sizing: border-box;
+    width: min(14rem, calc(100% - 2rem));
+    max-width: 14rem;
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  #features .info-section-copy-narrow {
+    max-width: 12.5rem;
+  }
+
   #about .section-frame-overlay {
     aspect-ratio: 2.15 / 1;
     min-height: 0;
@@ -1392,10 +1433,6 @@ main {
     hue-rotate(131deg) brightness(92%) contrast(96%);
 }
 
-.hero-angled-view {
-  display: none;
-}
-
 .hero-tagline {
   position: absolute;
   right: clamp(1.75rem, 5vw, 3.5rem);
@@ -1450,18 +1487,6 @@ main {
     object-position: left center;
     filter: none;
     transform: translate(-0.35rem, -3rem);
-  }
-
-  .hero-angled-view {
-    display: block;
-    flex: 0 0 auto;
-    width: min(14.5rem, 52%);
-    height: auto;
-    margin: 0 0 0 auto;
-    object-fit: contain;
-    object-position: right center;
-    transform: translate(0.65rem, -3.35rem) scale(1.35);
-    transform-origin: right center;
   }
 
   .hero-tagline {

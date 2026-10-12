@@ -66,12 +66,12 @@ const infoSections = [
     },
     body: "The same compact design, in a range of stunning finishes.",
     tone: "light" as const,
-    layout: "split" as const,
+    layout: "overlay" as const,
     image: {
-      src: "/images/section-3.jpg",
-      alt: "Atom gamepads in black, green, pink, and cream lined up together",
-      width: 1292,
-      height: 443,
+      src: "/images/pastel_controllers_lineup.png",
+      alt: "Atom gamepads in pastel finishes lined up in a minimalist studio",
+      width: 2169,
+      height: 725,
     },
     action: {
       href: "#features-gallery",
@@ -353,7 +353,7 @@ export default function Home() {
             height: 395,
           }}
           mobileImage={{
-            src: "/images/mobile-hero-bg.png",
+            src: "/images/mobilebghero.png",
             alt: "Atom gamepad in forest green on a sunlit surface",
             width: 941,
             height: 1672,
@@ -409,14 +409,6 @@ export default function Home() {
               alt=""
               width={217}
               height={72}
-              unoptimized
-            />
-            <Image
-              className="hero-angled-view"
-              src="/images/angled-view.png"
-              alt="Atom gamepad at an angled view"
-              width={280}
-              height={280}
               unoptimized
             />
           </div>
