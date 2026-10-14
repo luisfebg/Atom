@@ -536,6 +536,14 @@ export default function Home() {
               {section.body ? <p>{section.body}</p> : null}
               {sectionAction(section)}
             </div>
+            {section.id === "features" ? (
+              <ul className="features-color-labels" aria-label="Controller colours">
+                <li>Obsidian</li>
+                <li>Forest</li>
+                <li>Blush</li>
+                <li>Pearl</li>
+              </ul>
+            ) : null}
             {section.id === "about" ? (
               <div className="about-rail" aria-hidden="true">
                 <span className="about-rail-stop">

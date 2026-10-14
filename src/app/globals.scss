@@ -460,6 +460,18 @@ main {
   display: grid;
 }
 
+.section-frame-triptych .section-photo-pane-hand {
+  overflow: hidden;
+  align-self: stretch;
+}
+
+.section-frame-triptych .section-photo-pane-hand .section-photo {
+  object-fit: contain;
+  object-position: center;
+  transform: scale(0.78);
+  transform-origin: center center;
+}
+
 .section-frame-triptych .section-photo-pane-side {
   display: flex;
   align-items: center;
@@ -710,6 +722,32 @@ main {
 
 #features .info-section-copy-narrow {
   max-width: 14rem;
+}
+
+.features-color-labels {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(0.85rem, 2.2vw, 1.35rem);
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  // Match the photo's left shift so labels sit under each controller
+  width: min(52rem, 72%);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform: translateX(calc(-50% - 3.5%));
+  color: var(--color-text);
+  text-align: center;
+  pointer-events: none;
+}
+
+.features-color-labels li {
+  font-size: clamp(0.68rem, 1.1vw, 0.82rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 #support .section-frame-overlay {
@@ -980,6 +1018,11 @@ main {
     min-height: 0;
   }
 
+  .section-frame-triptych .section-photo-pane-hand .section-photo {
+    object-fit: contain;
+    transform: scale(0.72);
+  }
+
   .section-frame-triptych .section-copy-pane {
     grid-area: copy;
     position: relative;
@@ -1115,6 +1158,17 @@ main {
 
   #features .info-section-copy-narrow {
     max-width: 12.5rem;
+  }
+
+  .features-color-labels {
+    width: min(22rem, 88%);
+    bottom: 0.55rem;
+    transform: translateX(calc(-50% - 2%));
+  }
+
+  .features-color-labels li {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
   }
 
   #about .section-frame-overlay {
