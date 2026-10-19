@@ -71,6 +71,41 @@ html[data-site-font="plus-jakarta"] {
   --font-body: var(--font-option-plus-jakarta);
 }
 
+html[data-site-font="space-grotesk"] {
+  --font-display: var(--font-option-space-grotesk);
+  --font-body: var(--font-option-space-grotesk);
+}
+
+html[data-site-font="outfit"] {
+  --font-display: var(--font-option-outfit);
+  --font-body: var(--font-option-outfit);
+}
+
+html[data-site-font="sora"] {
+  --font-display: var(--font-option-sora);
+  --font-body: var(--font-option-sora);
+}
+
+html[data-site-font="syne"] {
+  --font-display: var(--font-option-syne);
+  --font-body: var(--font-option-syne);
+}
+
+html[data-site-font="dm-sans"] {
+  --font-display: var(--font-option-dm-sans);
+  --font-body: var(--font-option-dm-sans);
+}
+
+html[data-site-font="orbitron"] {
+  --font-display: var(--font-option-orbitron);
+  --font-body: var(--font-option-orbitron);
+}
+
+html[data-site-font="rubik"] {
+  --font-display: var(--font-option-rubik);
+  --font-body: var(--font-option-rubik);
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 4.5rem;
@@ -2499,6 +2534,46 @@ p {
   opacity: 0.7;
 }
 
+.font-switcher-divider {
+  flex: 0 0 auto;
+  width: 1px;
+  align-self: stretch;
+  margin: 0.15rem 0.15rem;
+  background: color-mix(in srgb, var(--color-text-on-dark) 22%, transparent);
+}
+
+.font-switcher-set-tabs {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-text-on-dark) 8%, transparent);
+}
+
+.font-switcher-set-tab {
+  appearance: none;
+  margin: 0;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: color-mix(in srgb, var(--color-text-on-dark) 78%, transparent);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.font-switcher-set-tab-active {
+  border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  color: var(--color-text-on-dark);
+}
+
 .font-switcher-options {
   display: flex;
   align-items: center;
@@ -2644,9 +2719,27 @@ p {
 
   .font-switcher-modal-options {
     display: grid;
-    gap: 0.45rem;
+    gap: 0.75rem;
     padding: 0.85rem;
     overflow-y: auto;
+  }
+
+  .font-switcher-set-tabs-modal {
+    width: fit-content;
+    background: color-mix(in srgb, var(--color-text) 8%, transparent);
+  }
+
+  .font-switcher-set-tabs-modal .font-switcher-set-tab {
+    color: color-mix(in srgb, var(--color-text) 72%, transparent);
+  }
+
+  .font-switcher-set-tabs-modal .font-switcher-set-tab-active {
+    color: var(--color-text);
+  }
+
+  .font-switcher-modal-group {
+    display: grid;
+    gap: 0.45rem;
   }
 
   .font-switcher-modal-option {
